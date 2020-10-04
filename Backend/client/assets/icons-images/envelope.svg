@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80" height="80" viewBox="0 0 80 80">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="1" y1="0.5" x2="0" y2="0.538" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#00a8ff"/>
+      <stop offset="1" stop-color="#285fdd"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_2506" data-name="Group 2506" transform="translate(-781 -4547.881)">
+    <circle id="Ellipse_2" data-name="Ellipse 2" class="cls-1" cx="40" cy="40" r="40" transform="translate(781 4547.881)"/>
+    <path id="envelope-alt" class="cls-2" d="M36,4H8a6,6,0,0,0-6,6V30a6,6,0,0,0,6,6H36a6,6,0,0,0,6-6V10a6,6,0,0,0-6-6ZM8,8H36a2,2,0,0,1,2,2L22,19.76,6,10A2,2,0,0,1,8,8ZM38,30a2,2,0,0,1-2,2H8a2,2,0,0,1-2-2V14.56L20.96,23.7a2,2,0,0,0,2,0L38,14.56Z" transform="translate(799 4567.881)"/>
+  </g>
+</svg>
