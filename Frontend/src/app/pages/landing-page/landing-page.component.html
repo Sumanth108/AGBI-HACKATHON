@@ -1,0 +1,249 @@
+<ng-container>
+  <nav class="navbar navbar-transparent fixed-top navbar-expand-lg">
+    <div class="container">
+      <div class="navbar-translate">
+        <a class="navbar-brand" placement="bottom" [routerLink]="['/home']" target="_blank" tooltip="Random Tip">
+          <span id="heading" style="display:inline-block">
+            Krunker
+          </span>
+        </a>
+        <button aria-controls="navigation-index" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler"
+          [attr.aria-expanded]="!isCollapsed" (click)="isCollapsed = !isCollapsed" id="navigation" type="button">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse justify-content-end" [collapse]="isCollapsed" id="navigation">
+        <div class="navbar-collapse-header">
+          <div class="row">
+            <div class="col-4 collapse-brand" id="heading"><a>Krunker</a></div>
+            <div class="col-6 collapse-close text-right">
+              <button aria-controls="navigation-index" aria-label="Toggle navigation" class="navbar-toggler"
+                [attr.aria-expanded]="!isCollapsed" (click)="isCollapsed = !isCollapsed" id="navigation" type="button">
+                <i class="tim-icons icon-simple-remove" style="color:#ffffff"> </i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <ul class="navbar-nav">
+          <li class="nav-item" >
+          <div class=" dropdown" dropdown>
+            <button aria-expanded="false" aria-haspopup="true"  class=" btn btn-primary btn-round btn-md dropdown-toggle dropdown-toggle" data-toggle="dropdown" dropdownToggle id="dropdownMenuButton" type="button">
+              Services
+            </button>
+            <div aria-labelledby="dropdownMenuButton" class=" dropdown-menu" *dropdownMenu>
+              <a class="dropdown-item" [routerLink]="['/consult-ai']" id="buttons">Consult
+                A.I.
+              </a>
+              <a class="dropdown-item" [routerLink]="['/forums']" id="buttons"> Go to
+                Forums
+              </a>
+           
+              <a class="dropdown-item" [routerLink]="['/chat']" id="buttons"> Go To Chat
+                Assistant
+              </a>
+   
+              <a class="dropdown-item" [routerLink]="['/getNearbyDocs']"
+                id="buttons">Dermitologists Near Me
+              </a>
+            </div>
+          </div>
+        </li>
+         
+        
+            
+          <li class="nav-item" *ngIf="!globalUserService.loggedIn">
+            <a id="buttons" class="btn btn-primary btn-round btn-md"
+              (click)="globalUserService.openLoginRegisterComponent()">
+              Login/Signup
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="globalUserService.loggedIn">
+            <a class="btn btn-primary btn-round btn-lg">
+              Hi, Welcome <a style="font-size:15px;font-weight:bold">{{globalUserService.username}}</a> | <img
+                style="width:18px;margin:0 15px 0 15px!important" src="../../../assets/icons-images/down-arrow.svg"
+                [matMenuTriggerFor]="menu">
+              <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item (click)="openUserProfile()"> My Profile </button>
+                <button mat-menu-item (click)="globalUserService.logout()"> Logout </button>
+              </mat-menu>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="wrapper">
+    <div class="squares square1"></div>
+    <div class="squares square2"></div>
+    <div class="squares square3"></div>
+    <div class="squares square4"></div>
+    <div class="squares square5"></div>
+    <div class="squares square6"></div>
+    <div class="squares square7"></div>
+    <div class="section" style="margin-top:3%;">
+      <div class="container middle">
+        <h1>How It Works?</h1>
+      </div>
+      <img class="path" src="assets/img/path1.png" />
+      <div class="containerNew" style="min-height:fit-content!important">
+        <ol class="step-list">
+          <li class="step-list__item">
+            <div class="step-list__item__inner">
+              <div class="content">
+                <div class="body">
+                  <h2>Upload Your photo</h2>
+                  <p>Upload your photo and get instant consultation from our state of the art A.I.</p>
+                </div>
+
+                <div class="icon">
+                  <img src="assets/icons-images/step1.png" alt="Check" />
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="step-list__item">
+            <div class="step-list__item__inner">
+              <div class="content">
+                <div class="body">
+                  <h2>Find a Doctor Near You Or Schedule a consultation Online</h2>
+                  <p>Enter your Location and find a specialist near your Area, or schedule a online consultation through
+                    our platform!!</p>
+                </div>
+                <div class="icon">
+                  <img src="assets/icons-images/step2.png" alt="Check" />
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="step-list__item">
+            <div class="step-list__item__inner">
+              <div class="content">
+                <div class="body">
+                  <h2>Discuss Your results and experience on the discussion forums</h2>
+                  <p> Our Extensive forums enable you to share your experiences with other people and derive value out
+                    of theirs.
+                  </p>
+                </div>
+
+                <div class="icon">
+                  <img src="assets/icons-images/step3.png" alt="Check" />
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="step-list__item">
+            <div class="step-list__item__inner">
+              <div class="content">
+                <div class="body">
+                  <h2>Post Your Feedback and Discuss on Forums</h2>
+                  <p> After Your Online/Offline consultation discuss your doctors analysis on the forums</p>
+                </div>
+                <div class="icon">
+                  <img src="assets/icons-images/step4.png" alt="Check" />
+                </div>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+    <div class="main">
+      <div class="">
+        <img class="path" src="assets/img/path3.png" />
+        <!-- Place the slick carousal code here -->
+        <div class="row" style="margin-top: 2%; width: -webkit-fill-available;">
+          <div style="background-color:transparent; width: -webkit-fill-available;height:500px">
+            <div class="row" style="width: 100%;">
+              <div style="width: 100%" class="middle">
+                <h1 style="text-align: center;margin-top: 4%;">What People Say</h1>
+              </div>
+            </div>
+            <div style="padding: 4%;padding-top: 0%;width:-webkit-fill-available;">
+              <ngx-slick-carousel class="carousel responsive" #slickModal="slick-carousel" (init)="slickInit($event)"
+                (breakpoint)="breakpoint($event)" (afterChange)="afterChange($event)"
+                (beforeChange)="beforeChange($event)">
+                <div ngxSlickItem class="slide" style="margin:1%;">
+                  <mat-card class="example-card">
+                    <img mat-card-image src="assets/icons-images/employee.svg" width="10%" height="10%" alt="Photo of"
+                      style="border-radius: 100%;
+                  height: 100px;
+                  width: 100px;
+                  margin: auto;
+                  padding: 10px;">
+                    <h6>sdjnck cdjks</h6>
+                    <mat-card-content>
+                      <p>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut, distinctio qui inventore
+                        voluptatem vitae quas
+                        omnis temporibus libero nostrum enim?
+                      </p>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+                <div ngxSlickItem class="slide" style="margin:1%;">
+                  <mat-card class="example-card">
+                    <img mat-card-image src="assets/icons-images/employee.svg" width="10%" height="10%" alt="Photo of"
+                      style="border-radius: 100%;
+                  height: 100px;
+                  width: 100px;
+                  margin: auto;
+                  padding: 10px;">
+                    <h6>sdjnck cdjks</h6>
+                    <mat-card-content>
+                      <p>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut, distinctio qui inventore
+                        voluptatem vitae quas
+                        omnis temporibus libero nostrum enim?
+                      </p>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+                <div ngxSlickItem class="slide" style="margin:1%;">
+                  <mat-card class="example-card">
+                    <img mat-card-image src="assets/icons-images/employee.svg" width="10%" height="10%" alt="Photo of"
+                      style="border-radius: 100%;
+                  height: 100px;
+                  width: 100px;
+                  margin: auto;
+                  padding: 10px;">
+                    <h6>sdjnck cdjks</h6>
+                    <mat-card-content>
+                      <p>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut, distinctio qui inventore
+                        voluptatem vitae quas
+                        omnis temporibus libero nostrum enim?
+                      </p>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+                <div ngxSlickItem class="slide" style="margin:1%;">
+                  <mat-card class="example-card">
+                    <img mat-card-image src="assets/icons-images/employee.svg" width="10%" height="10%" alt="Photo of"
+                      style="border-radius: 100%;
+                  height: 100px;
+                  width: 100px;
+                  margin: auto;
+                  padding: 10px;">
+                    <h6>sdjnck cdjks</h6>
+                    <mat-card-content>
+                      <p>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut, distinctio qui inventore
+                        voluptatem vitae quas
+                        omnis temporibus libero nostrum enim?
+                      </p>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </ngx-slick-carousel>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section section-typo">
+        <img class="path" src="assets/img/path1.png" />
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,39 @@
+<ng-container>
+    <div class="row" *ngIf="globalUserService.userObj.isDoctor === false">
+        <p>Choose a date below and a specific time of the day will be chosen of that day by the doctor you're making a
+            request to.</p>
+        <form [formGroup]="requestForm">
+            <mat-form-field appearance="outline">
+                <mat-label>Choose a date</mat-label>
+                <input type="date" matInput formControlName="requestDate" required>
+                <!-- [matDatepicker]="picker"  -->
+                <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker> -->
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Choose a time:</mat-label>
+                <input matInput [ngxTimepicker]="time" [format]="24" formControlName="requestTime" required>
+            </mat-form-field>
+            <ngx-material-timepicker #time></ngx-material-timepicker>
+        </form>
+        <button [ngClass]="{'disabled':requestForm.invalid}" (click)="makeRequest()" class="btn requestBtn">
+            Request Consultation
+        </button>
+    </div>
+    <div class="row" *ngIf="globalUserService.userObj.isDoctor === true">
+        <p>If you want to accept this request then choose a sepcific time of the day OR click on Reject to reject this
+            request.</p>
+        <form [formGroup]="acceptanceForm">
+            <mat-form-field appearance="outline">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="time">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </form>
+    </div>
+    <div class="row" *ngIf="(requestMade$ | async) === true">
+        <p>Submitted.</p>
+        <p>You can view the status of these under "My Proflie Section" </p>
+    </div>
+</ng-container>

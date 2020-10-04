@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80" height="80" viewBox="0 0 80 80">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="1" y1="0.5" x2="0" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#00a8ff"/>
+      <stop offset="1" stop-color="#285fdd"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_2505" data-name="Group 2505" transform="translate(-344 -4547.881)">
+    <circle id="Ellipse_3" data-name="Ellipse 3" class="cls-1" cx="40" cy="40" r="40" transform="translate(344 4547.881)"/>
+    <path id="map-marker" class="cls-2" d="M20,2A16,16,0,0,0,4,18C4,28.8,18.1,41,18.7,41.52a2,2,0,0,0,2.6,0C22,41,36,28.8,36,18A16,16,0,0,0,20,2Zm0,35.3C15.74,33.3,8,24.68,8,18a12,12,0,1,1,24,0C32,24.68,24.26,33.32,20,37.3ZM20,10a8,8,0,1,0,8,8A8,8,0,0,0,20,10Zm0,12a4,4,0,1,1,4-4A4,4,0,0,1,20,22Z" transform="translate(364 4565.881)"/>
+  </g>
+</svg>

@@ -1,0 +1,403 @@
+<ng-container>
+    <nav class="navbar navbar-transparent navbar-expand-lg">
+        <div class="container">
+            <div class="navbar-translate">
+                <a class="navbar-brand" placement="bottom" [routerLink]="['/home']" tooltip="Random Tip">
+                    <span id="heading" style="display:inline-block">
+                        discuss@Team Name
+                    </span>
+                </a>
+                <button aria-controls="navigation-index" aria-label="Toggle navigation"
+                    class="navbar-toggler navbar-toggler" [attr.aria-expanded]="!isCollapsed"
+                    (click)="isCollapsed = !isCollapsed" id="navigation" type="button">
+                    <span class="navbar-toggler-bar bar1"></span>
+                    <span class="navbar-toggler-bar bar2"></span>
+                    <span class="navbar-toggler-bar bar3"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse justify-content-end" [collapse]="!isCollapsed" id="navigation">
+                <div class="navbar-collapse-header">
+                    <div class="row">
+                        <div class="col-6 collapse-brand"><a>Team Name</a></div>
+                        <div class="col-6 collapse-close text-right">
+                            <button aria-controls="navigation-index" aria-label="Toggle navigation"
+                                class="navbar-toggler" [attr.aria-expanded]="!isCollapsed"
+                                (click)="isCollapsed = !isCollapsed" id="navigation" type="button">
+                                <i class="tim-icons icon-simple-remove"> </i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item" >
+                        <div class=" dropdown" dropdown>
+                          <button aria-expanded="false" aria-haspopup="true"  class=" btn btn-primary btn-round btn-md dropdown-toggle dropdown-toggle" data-toggle="dropdown" dropdownToggle id="dropdownMenuButton" type="button">
+                            Services
+                          </button>
+                          <div aria-labelledby="dropdownMenuButton" class=" dropdown-menu" *dropdownMenu>
+                            <a class="dropdown-item" [routerLink]="['/consult-ai']" id="buttons">Consult
+                              A.I.
+                            </a>
+                            
+                         
+                            <a class="dropdown-item" [routerLink]="['/chat']" id="buttons"> Go To Chat
+                              Assistant
+                            </a>
+                 
+                            <a class="dropdown-item" [routerLink]="['/getNearbyDocs']"
+                              id="buttons">Dermitologists Near Me
+                            </a>
+                          </div>
+                        </div>
+                      </li>
+                       
+                    
+                    <li class="nav-item" *ngIf="!globalUserService.loggedIn">
+                        <a class="btn btn-primary btn-round btn-lg" id="buttons"
+                            (click)="globalUserService.openLoginRegisterComponent()">
+                            Login/Signup
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="globalUserService.loggedIn">
+                        <a class="btn btn-primary btn-round btn-lg">
+                            Hi, Welcome <a style="font-size:15px;font-weight:bold">{{globalUserService.username}}</a> |
+                            <img style="width:18px;margin:0 15px 0 15px!important"
+                                src="../../../assets/icons-images/down-arrow.svg" [matMenuTriggerFor]="menu">
+                            <mat-menu #menu="matMenu" xPosition="before">
+                                <button mat-menu-item (click)="openUserProfile()"> My Profile </button>
+                                <button mat-menu-item (click)="globalUserService.logout()"> Logout </button>
+                            </mat-menu>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="wrapper">
+        <div class="squares square1"></div>
+        <div class="squares square2"></div>
+        <div class="squares square3"></div>
+        <div class="squares square4"></div>
+        <div class="squares square5"></div>
+        <div class="squares square6"></div>
+        <div class="squares square7"></div>
+        <div class="section" style="margin-top:1%;">
+            <mat-sidenav-container [hasBackdrop]="false">
+                <mat-sidenav id="sidenav2" #sidenav2 mode='side' class="sidenav1Settings" position="start">
+                    <div *ngIf="!postToShow">
+                        <div class="postArea spinner">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                    </div>
+                    <div *ngIf="postToShow" style="position:relative; width:100%;display:flex; flex-direction:column;
+                        align-items: flex-start;justify-content: flex-start;padding:5%;overflow:auto">
+                        <p class="titles"
+                            style="font: size 1.9rem;color:rgba(31, 31, 112, 0.76)!important;margin-bottom:3%">Post by
+                            {{postToShow.post.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a class="mat-elevation-z7"
+                                style="position:absolute;right:18%;border-radius:1.1rem!important;width: 12rem;padding:2px 10px;font-size:1.1rem;font-weight:bold;display: inline-flex;cursor:pointer"
+                                (click)="backToAllPosts()">Back To All Posts<img style="width:1.1rem;margin:1%;"
+                                    src="../../assets/icons-images/double-right-arrow.png"></a></p>
+                        <div class="postRow">
+                            <div class="column"
+                                style="box-shadow:0px 0px; border:1px solid rgba(31, 31, 112, 0.76);width:70vw">
+                                <div class="arrow-div col-2" style="padding:5%">
+                                    <img (click)="upvotePost(postToShow.post)"
+                                        *ngIf="!globalUserService.user_id || !postToShow.post.upvotedby.includes(globalUserService.user_id)"
+                                        class="arrow arrowUp" src="../../assets/icons-images/downarrow.svg">
+                                    <img *ngIf="globalUserService.user_id && postToShow.post.upvotedby.includes(globalUserService.user_id)"
+                                        class="arrow arrowUp arrowHigh"
+                                        src="../../assets/icons-images/downarrow Blue.svg">
+                                    <p class="score">{{postToShow.post.score}}</p>
+                                    <img *ngIf="globalUserService.user_id && postToShow.post.downvotedby.includes(globalUserService.user_id)"
+                                        class="arrow arrowHigh" src="../../assets/icons-images/downarrow Blue.svg">
+                                    <img (click)="downvotePost(postToShow.post)"
+                                        *ngIf="!globalUserService.user_id || !postToShow.post.downvotedby.includes(globalUserService.user_id)"
+                                        class="arrow" src="../../assets/icons-images/downarrow.svg">
+                                </div>
+                                <!-- <div class="arrow-div col-2" style="padding:5%">
+                                    <img class="arrow arrowUp" src="../../assets/icons-images/downarrow.svg">
+                                    <p class="score">{{postToShow.post.score}}</p>
+                                    <img class="arrow" src="../../assets/icons-images/downarrow.svg">
+                                </div> -->
+                                <div class="col-10">
+                                    <p class="postTitle">
+                                        {{postToShow.post.title}}
+                                    </p>
+                                    <p class="postContent">{{postToShow.post.text}}</p>
+                                    <p class="postMeta">Submitted {{setSubmited(postToShow.post.created)}} by
+                                        <strong>{{postToShow.post.username}}</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="postRow"
+                            style="display: flex;flex-direction:column;align-items: flex-start;justify-content: flex-start;margin: 0.5% 4% 0.5% 3%">
+                            <a [hidden]="newComment.value" style="color:rgba(34, 33, 33, 0.842)">Type here to post a
+                                public comment( max 40 words)
+                            </a>
+                            <div class="column"
+                                style="height:fit-content;border:1px solid rgba(31, 31, 112, 0.76);background:transparent!important;box-shadow:0px 0px;width:fit-content">
+                                <textarea [formControl]="newComment" rows="2"
+                                    style="background:transparent;color:black;font-size:0.8rem;border:0px;width:70vw"></textarea>
+                            </div>
+                            <div *ngIf="newComment.value" class="submitButton mat-elevation-z12"
+                                style="height:30px;border-radius:15px;width:25%;margin:3% 0 3%" (click)="postComment()">
+                                <a class="SubmitText" style="font-size:0.9rem!important">Submit
+                                    Comment</a>
+                            </div>
+                        </div>
+                        <a style="margin-left:3%;color:rgba(34, 33, 33, 0.842)">Comments
+                            ({{postToShow.comments.length}})
+                        </a>
+                        <div
+                            style="height:85vh;overflow-y:scroll;scrollbar-width: none;margin-bottom:100px!important;  /* Firefox */">
+                            <div class="postRow" *ngFor="let comment of postToShow.comments">
+                                <div class="column"
+                                    style="background:transparent!important;box-shadow:0px 0px;width:55vw">
+                                    <div class="arrow-div col-2" style="padding:1%">
+                                        <img style="width:1.2rem" (click)="upvoteComment(comment)"
+                                            *ngIf="!globalUserService.user_id || !comment.upvotedby.includes(globalUserService.user_id)"
+                                            class="arrow arrowUp" src="../../assets/icons-images/downarrow.svg">
+                                        <img style="width:1.2rem"
+                                            *ngIf="globalUserService.user_id && comment.upvotedby.includes(globalUserService.user_id)"
+                                            class="arrow arrowUp arrowHigh"
+                                            src="../../assets/icons-images/downarrow Blue.svg">
+                                        <p class="score">{{comment.score}}</p>
+                                        <img style="width:1.2rem"
+                                            *ngIf="globalUserService.user_id && comment.downvotedby.includes(globalUserService.user_id)"
+                                            class="arrow arrowHigh" src="../../assets/icons-images/downarrow Blue.svg">
+                                        <img style="width:1.2rem" (click)="downvoteComment(comment)"
+                                            *ngIf="!globalUserService.user_id || !comment.downvotedby.includes(globalUserService.user_id)"
+                                            class="arrow" src="../../assets/icons-images/downarrow.svg">
+                                    </div>
+                                    <!-- <div class="arrow-div col-2" style="padding:1%">
+                                        <img class="arrow arrowUp" style="width:1.2rem"
+                                            src="../../assets/icons-images/downarrow.svg">
+                                        <p class="score">{{comment.score}}</p>
+                                        <img class="arrow" style="width:1.2rem"
+                                            src="../../assets/icons-images/downarrow.svg">
+                                    </div> -->
+                                    <div class="col-10">
+                                        <p style="font-size:1.4 rem!important;font-weight: 400!important;">
+                                            {{comment.comment}} </p>
+                                        <p class="postMeta" style="font-size:1.2 rem!important">Submitted
+                                            {{setSubmited(comment.created)}} by
+                                            <strong>{{comment.username}}</strong></p>
+                                        <p style="font-size:1.2 rem!important">
+                                            <strong *ngIf="comment.author == globalUserService.user_id"
+                                                (click)="deleteComment(comment)">delete comment</strong>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-sidenav>
+                <mat-sidenav-content>
+                    <div class="main">
+                        <div class="row">
+                            <div class="col-8">
+                                <mat-sidenav-container [hasBackdrop]="false">
+                                    <mat-sidenav id="sidenav1" #sidenav1 mode='side' class="sidenav1Settings"
+                                        position="end">
+                                        <div class="postRow">
+                                            <div style="
+                                    width: 100%;
+                                    display: flex!important;
+                                    flex-direction:row!important;
+                                    align-items:flex-start!important;
+                                    justify-content: center;
+                                    margin-bottom:30px!important">
+                                                <a style="position: absolute;
+                                        right:90px" class="titles">Submit New Post</a>
+                                            </div>
+                                        </div>
+                                        <div class="postArea" style="overflow:hidden!important">
+                                            <form [formGroup]="postForm">
+                                                <div class="postRow" style="display:flex;justify-content: end;">
+                                                    <div class="row"
+                                                        style="width:75%;padding:5%;display: flex;flex-direction:column;align-items: flex-start;">
+                                                        <p class="titles"
+                                                            style="font-size:1.5rem;color:rgba(31, 31, 112, 0.76)!important;margin-bottom:3%">
+                                                            title</p>
+                                                        <input style="color:black;background:rgb(253, 253, 251)"
+                                                            class="form-control" formControlName="title" type="text" />
+                                                        <div *ngIf="f.title.errors">
+                                                            <p *ngIf="f.title.errors.minlength"
+                                                                style="width:100%;font-size:0.85rem;color:red">*min
+                                                                characters
+                                                                are
+                                                                12</p>
+                                                            <p *ngIf="f.title.errors.maxlength"
+                                                                style="width:100%;font-size:0.85rem;color:red">*max
+                                                                characters
+                                                                are
+                                                                70</p>
+                                                        </div>
+                                                        <p class="titles"
+                                                            style="font-size:1.5rem;color:rgba(31, 31, 112, 0.76)!important;margin:3% 0 3% 0;">
+                                                            content</p>
+                                                        <textarea type="text" formControlName="text" rows="7"
+                                                            style="width:100%;border-radius:15px;"></textarea>
+                                                        <div *ngIf="f.text.errors">
+                                                            <p *ngIf="f.text.errors.minlength"
+                                                                style="width:100%;font-size:0.85rem;color:red">*min
+                                                                characters
+                                                                are
+                                                                45</p>
+                                                            <p *ngIf="f.text.errors.maxlength"
+                                                                style="width:100%;font-size:0.85rem;color:red">*max
+                                                                characters
+                                                                are
+                                                                600</p>
+                                                        </div>
+                                                        <div (click)="submitPost()"
+                                                            style="display:flex;flex-direction:row;align-items:center;width:100%">
+                                                            <div style="border-radius:13px;height:45px;width:50%;margin:5% 0 0 0"
+                                                                [ngClass]="{'submitButton':postForm.valid,'submitButtonDis':postForm.invalid||submittingPost,'mat-elevation-z12':true}">
+                                                                <div>
+                                                                    <a class="SubmitText">Submit</a><br>
+                                                                </div>
+                                                            </div>
+                                                            <div [hidden]="!submittingPost" class="spinner"
+                                                                style="width:50%">
+                                                                <div class="bounce1"></div>
+                                                                <div class="bounce2"></div>
+                                                                <div class="bounce3"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </mat-sidenav>
+                                    <mat-sidenav-content>
+                                        <a style="position: absolute;
+                                        right:90px" class="titles">All Posts</a>
+                                        <div class="postRow">
+                                            <div style="
+                                        width: 100%;
+                                        margin-bottom: 40px;
+                        ">
+                                                <form id="content">
+                                                    <input type="text" [formControl]="searchControl" name="input"
+                                                        class="animatedInput" id="search-input">
+                                                    <button type="reset" class="search mat-elevation-z7"
+                                                        style="padding:10px" id="search-btn"
+                                                        (click)="searchButtonBeauty()"></button>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                        <div class="postArea spinner" *ngIf="searching">
+                                            <div class="bounce1"></div>
+                                            <div class="bounce2"></div>
+                                            <div class="bounce3"></div>
+                                        </div>
+                                        <div class="postArea" *ngIf="!searching">
+                                            <div class="postRow" *ngFor="let post of posts;let i  = index">
+                                                <div class="column">
+                                                    <div class="arrow-div col-2">
+                                                        <img (click)="upvotePost(post)"
+                                                            *ngIf="!globalUserService.user_id || !post.upvotedby.includes(globalUserService.user_id)"
+                                                            class="arrow arrowUp"
+                                                            src="../../assets/icons-images/downarrow.svg">
+                                                        <img *ngIf="globalUserService.user_id && post.upvotedby.includes(globalUserService.user_id)"
+                                                            class="arrow arrowUp arrowHigh"
+                                                            src="../../assets/icons-images/downarrow Blue.svg">
+                                                        <p class="score">{{post.score}}</p>
+                                                        <img *ngIf="globalUserService.user_id && post.downvotedby.includes(globalUserService.user_id)"
+                                                            class="arrow arrowHigh"
+                                                            src="../../assets/icons-images/downarrow Blue.svg">
+                                                        <img (click)="downvotePost(post)"
+                                                            *ngIf="!globalUserService.user_id || !post.downvotedby.includes(globalUserService.user_id)"
+                                                            class="arrow" src="../../assets/icons-images/downarrow.svg">
+                                                    </div>
+                                                    <div class="col-10">
+                                                        <p class="postTitle" (click)="getSinglePost(post._id)">
+                                                            {{post.title}}
+                                                        </p>
+                                                        <p class="postContent">{{setPostContent(post.text)}}</p>
+                                                        <p class="postMeta">Submitted {{setSubmited(post.created)}} by
+                                                            <strong> {{post.username}}</strong></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-sidenav-content>
+                                </mat-sidenav-container>
+                            </div>
+                            <div class="col-4" style="padding-top: 4.5%;">
+                                <div class="titles">
+                                </div>
+                                <div class="postRow">
+                                    <div style="cursor:pointer;padding:3% 7% 3% 7%" class="column">
+                                        <div class="submitButton mat-elevation-z12">
+                                            <div *ngIf="!globalUserService.loggedIn">
+                                                <a class="SubmitText">Login or Register</a><br>
+                                                <a class="SubmitSubText">to Submit a post</a>
+                                            </div>
+                                            <div *ngIf="globalUserService.loggedIn" (click)="toggleDrawer()">
+                                                <a class="SubmitText">Submit</a><br>
+                                                <a class="SubmitSubText">a new post</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="postArea" style="max-height:43vh">
+                                    <div class="postRow">
+                                        <div class="column">
+                                            <table style="margin-top:2%;font-size:0.6rem!important">
+                                                <thead>
+                                                    <p style="text-align:center;font-size:1.3rem;font-weight:500;">
+                                                        Trending
+                                                        Posts....</p>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let post of postsSideBar;let i  = index"
+                                                        [hidden]="i>=loadLimit">
+                                                        <div class="col-10">
+                                                            <p class="postTitle" style="font-size:0.85rem!important">
+                                                                {{post.title}}
+                                                            </p>
+                                                            <p class="postContent" style="font-size:0.85rem!important">
+                                                                {{setPostContent(post.text)}} By <a>
+                                                                    {{post.username}}</a></p>
+                                                            <hr id="lineHr">
+                                                        </div>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="row">
+                                                                <div class="submitButton mat-elevation-z12"
+                                                                    style="height:30px;border-radius:15px;width:30%;margin:3% auto 3% auto"
+                                                                    (click)="loadMore()">
+                                                                    <a class="SubmitText"
+                                                                        style="font-size:0.9rem!important">Show
+                                                                        More</a>
+                                                                </div>
+                                                                <div *ngIf="!(loadLimit < 3)"
+                                                                    class="submitButton mat-elevation-z12"
+                                                                    style="height:30px;border-radius:15px;width:30%;margin:3% auto 3% auto"
+                                                                    (click)="loadLess()">
+                                                                    <a class="SubmitText"
+                                                                        style="font-size:0.9rem!important">Show
+                                                                        Less</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-sidenav-content>
+            </mat-sidenav-container>
+        </div>
+    </div>
+</ng-container>

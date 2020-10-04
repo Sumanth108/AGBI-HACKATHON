@@ -1,0 +1,214 @@
+<ng-container>
+    <nav class="navbar navbar-transparent fixed-top navbar-expand-lg">
+        <div class="container">
+            <div class="navbar-translate">
+                <a class="navbar-brand" placement="bottom" [routerLink]="['/home']" target="_blank"
+                    tooltip="Random Tip">
+                    <span id="heading" style="display:inline-block">
+                        DoctorsNearMe@Krunker
+                    </span>
+                </a>
+                <button aria-controls="navigation-index" aria-label="Toggle navigation"
+                    class="navbar-toggler navbar-toggler" [attr.aria-expanded]="!isCollapsed"
+                    (click)="isCollapsed = !isCollapsed" id="navigation" type="button">
+                    <span class="navbar-toggler-bar bar1"></span>
+                    <span class="navbar-toggler-bar bar2"></span>
+                    <span class="navbar-toggler-bar bar3"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse justify-content-end" [collapse]="isCollapsed" id="navigation">
+                <div class="navbar-collapse-header">
+                    <div class="row">
+                        <div class="col-4 collapse-brand" id="heading"><a>DoctorsNearMe@Krunker</a></div>
+                        <div class="col-6 collapse-close text-right">
+                            <button aria-controls="navigation-index" aria-label="Toggle navigation"
+                                class="navbar-toggler" [attr.aria-expanded]="!isCollapsed"
+                                (click)="isCollapsed = !isCollapsed" id="navigation" type="button">
+                                <i class="tim-icons icon-simple-remove" style="color:#ffffff"> </i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item" >
+                        <div class=" dropdown" dropdown>
+                          <button aria-expanded="false" aria-haspopup="true"  class=" btn btn-primary btn-round btn-md dropdown-toggle dropdown-toggle" data-toggle="dropdown" dropdownToggle id="dropdownMenuButton" type="button">
+                            Services
+                          </button>
+                          <div aria-labelledby="dropdownMenuButton" class=" dropdown-menu" *dropdownMenu>
+                            <a class="dropdown-item" [routerLink]="['/consult-ai']" id="buttons">Consult
+                              A.I.
+                            </a>
+                            <a class="dropdown-item" [routerLink]="['/forums']" id="buttons"> Go to
+                              Forums
+                            </a>
+                         
+                            <a class="dropdown-item" [routerLink]="['/chat']" id="buttons"> Go To Chat
+                              Assistant
+                            </a>
+                 
+                            
+                          </div>
+                        </div>
+                      </li>
+                       
+                    <li class="nav-item" *ngIf="!globalUserService.loggedIn">
+                        <a id="buttons" class="btn btn-primary btn-round btn-md"
+                            (click)="globalUserService.openLoginRegisterComponent()">
+                            Login/Signup
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="globalUserService.loggedIn">
+                        <a class="btn btn-primary btn-round btn-lg">
+                            Hi, Welcome <a style="font-size:15px;font-weight:bold">{{globalUserService.username}}</a> |
+                            <img style="width:18px;margin:0 15px 0 15px!important"
+                                src="../../../assets/icons-images/down-arrow.svg" [matMenuTriggerFor]="menu">
+                            <mat-menu #menu="matMenu" xPosition="before">
+                                <button mat-menu-item (click)="openUserProfile()"> My Profile </button>
+                                <button mat-menu-item (click)="globalUserService.logout()"> Logout </button>
+                            </mat-menu>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="wrapper" style="overflow-y:hidden">
+        <div class="squares square1"></div>
+        <div class="squares square2"></div>
+        <div class="squares square3"></div>
+        <div class="squares square4"></div>
+        <div class="squares square5"></div>
+        <div class="squares square6"></div>
+        <div class="squares square7"></div>
+        <div class="section" style="margin-top: 3%;">
+            <p style="text-align:center;font-size:1.3rem;font-weight:bold;">Mode of Consultation:</p>
+            <mat-tab-group dynamicHeight mat-align-tabs="center">
+                <mat-tab label="Offline Consultation">
+                    <div class="">
+                        <div #messageBody class="section"
+                            style="padding-top:10px;margin:0% 10% 0 10%;height:100%;overflow:auto;position:relative;width:80%">
+                            <div class="messages column"
+                                style="background:rgba(31, 31, 112, 0.76);flex-direction:column!important;width:80%;position:relative;top:-1%;margin:auto!important;justify-content: end!important;">
+                                <div class="row"
+                                    style="font-weight:600;color:#ffffff!important;flex-direction:row!important;width:100%;justify-content: end!important;">
+                                    <div id="textMsgtitle">
+                                        <label>Location(Area):</label>
+                                    </div>
+                                    <div id="radiusDivtitle">
+                                        <label>Radius:</label>
+                                    </div>
+                                </div>
+                                <form [formGroup]="nearForm" style="display: inherit!important;width:100%!important">
+                                    <div class="row"
+                                        style="display:flex!important;flex-direction:row!important;width:100%;justify-content: center!important;">
+                                        <textarea id="textMsg" formControlName="Address"
+                                            (keyup.enter)="getLocationForward()" (blur)="getLocationForward()"
+                                            type="text">
+                                    </textarea>
+                                        <div id="radiusDiv" type="text">
+                                            <mat-slider thumbLabel [displayWith]="formatLabel" min="2" max="15"
+                                                formControlName="Radius">
+                                            </mat-slider>
+                                        </div>
+                                        <button class="btn" mat-raised-button id="sendBtn" (click)="getGeolocation()"><a
+                                                style="font-size:0.9rem;font-weight:600">Detect Location&nbsp;<i
+                                                    class="tim-icons icon-square-pin">
+                                                </i></a></button>
+                                    </div>
+                                </form>
+                                <div class="row" style="display:flex!important;
+                                    flex-direction:row!important;
+                                    width:100%;justify-content: center!important;">
+                                    <button class="btn" mat-raised-button id="goBtn" (click)="getResults()"><a
+                                            style="font-size:0.9rem;font-weight:600">Go&nbsp;&nbsp;<i
+                                                class="tim-icons icon-send">
+                                            </i></a></button>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <h3>Doctors Available for Consultation within {{nearForm.get('Radius').value}} Km radius
+                                </h3>
+                                <ul class="responsive-table">
+                                    <li class="table-header">
+                                        <div class="col col-1">S.No.</div>
+                                        <div class="col col-2">Name</div>
+                                        <div class="col col-3">Address/Area</div>
+                                    </li>
+                                </ul>
+                                <div *ngFor="let item of results$ | async; let i = index;">
+                                    <ul class="responsive-table slideAnimation" *ngIf="i == page">
+                                        <li class="table-row" *ngFor="let details of item;let a  = index;">
+                                            <div class="col col-1" data-label="S.No">{{5*page+a+1}}</div>
+                                            <div class="col col-2" data-label="Name">{{details.name}}</div>
+                                            <div class="col col-4" data-label="Address">{{details.formattedAddress}}
+                                            </div>
+                                            <div class="col col-2"><a style="color:blue" target="_blank"
+                                                    href="https://www.google.com/maps/search/?api=1&query={{details.lat}},{{details.long}}">View
+                                                    On Maps</a></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div [hidden]="!(loading$ | async)" class="spinner">
+                                    <div class="bounce1"></div>
+                                    <div class="bounce2"></div>
+                                    <div class="bounce3"></div>
+                                </div>
+                                <h3 *ngIf="(resultsOver$ | async) && page === maxValOfPageReached">No results
+                                    found....increase
+                                    the radius and then click "Go"
+                                </h3>
+                                <div class="row"
+                                    style="display: flex;flex-direction:row;align-items: center;justify-content: center;">
+                                    <button (click)="prevPage()" class="btn"
+                                        [ngClass]="{'paginationBtn':true,'disabled':page == 0}">
+                                        Previous
+                                    </button>
+                                    <button (click)="nextPage()" class="btn"
+                                        [ngClass]="{'paginationBtn':true,'disabled':(disableNext$ | async)}">
+                                        Next
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Online Consultation">
+                    <div class="">
+                        <div class="section"
+                            style="padding-top:10px;margin:0% 10% 0 10%;height:75vh;overflow-y:scroll;overflow-x:hidden;position:relative;width:80%">
+                            <div class="container">
+                                <h3>Doctors Available for Online Consultation</h3>
+                                <ul class="responsive-table">
+                                    <li class="table-header">
+                                        <div class="col col-1">S.No.</div>
+                                        <div class="col col-2">Name</div>
+                                        <div class="col col-3">Address/Area</div>
+                                    </li>
+                                </ul>
+                                <div>
+                                    <ul class="responsive-table slideAnimation">
+                                        <li class="table-row"
+                                            *ngFor="let details of resultsOnline$ | async; let i = index;">
+                                            <div class="col col-1" data-label="S.No">{{i+1}}</div>
+                                            <div class="col col-2" data-label="Name">{{details.name}}</div>
+                                            <div class="col col-4" data-label="Address">{{details.formattedAddress}}
+                                            </div>
+                                            <div class="col col-2">
+                                                <button [ngClass]="{'disabled':disabledRequestBtns.includes(i)}"
+                                                    (click)="openRequestDialog(details._id,details.name,i)"
+                                                    class="btn requestBtn">
+                                                    Request Consultation
+                                                </button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</ng-container>

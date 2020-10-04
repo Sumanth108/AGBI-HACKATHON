@@ -1,0 +1,26 @@
+
+::ng-deep .mat-dialog-container{
+    padding:0px!important;
+    z-index:9999999;
+    background: #1c1e45!important;
+}
+::ng-deep .cdk-overlay-dark-backdrop {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75));
+  }
+input{
+    color:black!important;
+}
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+    color: #141414;
+    background-color: #ffffff;
+    border-color: #181418;
+  }
+  
+  .dropdown-menu {
+    background-color: #fafafa;
+  }
+  
+  .dropdown-menu .dropdown-item {
+    color: #464646;
+  }
+  

@@ -1,0 +1,196 @@
+<ng-container>
+    <div class="section section-signup" style="padding:7% 5% 7% 5% !important">
+        <div style="position:absolute; top:10px;right:10px;z-index: 999999999;" (click)="closeDialog()">
+            <img style="width:20px" src="../../../assets/icons-images/closewhite.svg" alt="">
+        </div>
+        <div class="container">
+
+            <div class="row row-grid justify-content-between align-items-center">
+                <div class="col-md-12 mb-md-auto">
+                    <div class="card card-register" *ngIf="(whosHere$|async)==='newUser'">
+                        <div class="card-header" style="margin-top:2%">
+                            <h4 class="card-title" style="line-height: normal!important;">Register</h4>
+                        </div>
+                        <div class="card-body">
+                            <form class="form" [formGroup]="registerForm">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="tim-icons icon-single-02"> </i>
+                                        </div>
+                                    </div>
+                                    <input class="form-control" formControlName="username" placeholder="Username"
+                                        type="text" />
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="tim-icons icon-email-85"> </i>
+                                        </div>
+                                    </div>
+                                    <input class="form-control" formControlName="email" placeholder="Email"
+                                        type="text" />
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="tim-icons icon-lock-circle"> </i>
+                                        </div>
+                                    </div>
+                                    <input class="form-control" formControlName="password" placeholder="Password"
+                                        type="password" style="color: #ffff" />
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="tim-icons icon-lock-circle"> </i>
+                                        </div>
+                                    </div>
+                                    <input class="form-control" formControlName="passwordConfirm"
+                                        placeholder="Confirm Password" type="password" />
+                                </div>
+                            </form>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="tim-icons icon-square-pin"> </i>
+                                    </div>
+                                </div>
+                                <input class="form-control" [(ngModel)]="currentLocation"
+                                    placeholder="Enter location in the format:area city state, then hit enter"
+                                    (keyup.enter)="getCurrentLocationForward()" type="location" />
+                            </div>
+                            <button class="btn btn-lg btn-success" (click)="getGeolocation()">Detect
+                                Location</button>
+                        </div>
+                        <div class="card-footer">
+                            <a (click)="submitFormRegister()" class="btn btn-round btn-lg" href="javascript:void(0)">
+                                Register Now
+                            </a><br>
+                            <a style="font-size:1rem;color:rgb(0, 0, 0)!important"> Are You a Dermitologist? Register
+                                <strong (click)="changeWhosHere('doctor')">here</strong></a><br>
+                            <a style="font-size:1rem;color:rgb(0, 0, 0)!important"> Already a user ? Login <strong
+                                    (click)="changeWhosHere('oldUser')">here</strong></a>
+                        </div>
+                    </div>
+                    <div class="card card-register" *ngIf="(whosHere$|async)==='doctor'">
+                        <div class="card-header" style="margin-top:2%">
+                            <h4 class="card-title"
+                                style="line-height: normal!important;display: flex;flex-direction:column">Register<a
+                                    style="font-size: 0.9rem;">(for licensed practitioners of dermitology only)</a></h4>
+                        </div>
+                        <div class="card-body">
+                            <form class="form" [formGroup]="DoctorRegisterForm">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="tim-icons icon-single-02"></i>
+                                        </div>
+                                    </div>
+                                    <input class="form-control" [formControl]="registrationNumber"
+                                        placeholder="Registration Number( Provided by the Medical Council of India or State Medical Council)"
+                                        type="text" />
+                                    <img *ngIf="isRegValid" style="position:absolute;top:5px;right:3%;width:30px;"
+                                        src="../../assets/icons-images/checkedGreen.png" alt="checked">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="tim-icons icon-single-02"></i>
+                                        </div>
+                                    </div>
+                                    <input class="form-control" formControlName="username" placeholder="Registered Name"
+                                        type="text" />
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="tim-icons icon-email-85"> </i>
+                                        </div>
+                                    </div>
+                                    <input class="form-control" formControlName="email" placeholder="Email"
+                                        type="text" />
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="tim-icons icon-lock-circle"> </i>
+                                        </div>
+                                    </div>
+                                    <input class="form-control" formControlName="password" placeholder="Password"
+                                        type="password" style="color: #ffff" />
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="tim-icons icon-lock-circle"> </i>
+                                        </div>
+                                    </div>
+                                    <input class="form-control" formControlName="passwordConfirm"
+                                        placeholder="Confirm Password" type="password" />
+                                </div>
+                            </form>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="tim-icons icon-square-pin"> </i>
+                                    </div>
+                                </div>
+                                <input class="form-control" [(ngModel)]="currentLocationDoc"
+                                    placeholder="Enter location in the format:area city state, then hit enter"
+                                    (keyup.enter)="getCurrentLocationForwardDoc()" type="location" />
+                            </div>
+                            <button class="btn btn-lg btn-success" (click)="getGeolocationDoc()">Detect
+                                Location</button>
+                        </div>
+                        <div class="card-footer">
+                            <a (click)="submitDoctorFormRegister()" class="btn btn-round btn-lg"
+                                href="javascript:void(0)">
+                                Register Now
+                            </a><br>
+                            <a style="font-size:medium;color:rgb(0, 0, 0)!important"> Already a user ? Login <strong
+                                    (click)="changeWhosHere('oldUser')">here</strong></a>
+                        </div>
+                    </div>
+                    <div class="card card-register" *ngIf="(whosHere$|async)==='oldUser'">
+                        <div class="card-header" style="margin-top:2%">
+                            <h4 class="card-title" style="line-height: normal!important;">Login</h4>
+                        </div>
+                        <div class="card-body">
+                            <form class="form" [formGroup]="loginForm">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="tim-icons icon-single-02"> </i>
+                                        </div>
+                                    </div>
+                                    <input class="form-control" formControlName="username" placeholder="Username"
+                                        type="text" />
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="tim-icons icon-lock-circle"> </i>
+                                        </div>
+                                    </div>
+                                    <input class="form-control" formControlName="password" placeholder="Password"
+                                        type="password" />
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer">
+                            <a (click)="submitFormLogin()" class="btn btn-round btn-lg" href="javascript:void(0)">
+                                Login Now
+                            </a><br>
+                            <a style="font-size:1rem;color:rgb(0, 0, 0)!important"> Are You a Dermitologist? Register
+                                <strong (click)="changeWhosHere('doctor')">here</strong></a><br>
+                            <a style="font-size:1rem;color:rgb(0, 0, 0)!important"> New User ? Register <strong
+                                    (click)="changeWhosHere('newUser')">here</strong></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
